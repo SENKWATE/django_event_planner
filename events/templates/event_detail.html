@@ -6,26 +6,18 @@
   <div class="masthead-content">
 
     <div class="container">
-      <div class="card" style="width: 40rem; left: 190px; border-radius: 25px; border-color: black;">
+      <div class="card" style="width: 40rem; left: 190px; border-radius: 25px; border-color: black; border-width: 5px;">
 		  <div class="card-body">
 		    <h5 class="card-title text-center">Title: {{event.title}}</h5>
 		    <p class="card-text">Description: {{event.description}}</p>
 		  </div>
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item">Date: {{event.date}}</li>
+			    <li class="list-group-item" >Date: {{event.date}}</li>
 			    <li class="list-group-item">Time: {{event.time}}</li>
 			    <li class="list-group-item">Location: {{event.location}}</li>
 			    <li class="list-group-item">Seats number available: {{event.seats}}</li>
 			    
 				{% if request.user == event.owner %} 
-					{% comment %}<li class="list-group-item">Users:{% for j in userbook %} {{j.user.username}}, {% endfor %}</li>{% endcomment %}
-					
-					
-					{% comment %} 
-						<ul>
-							<li>{{j.user.username}}: {{j.seats}} &emsp;&emsp;&emsp; {{j.date_time}} </li>
-						</ul>
-					{% endcomment %}
 						<table class="table">
 					        <thead>
 					          <tr style="background-color: grey">
@@ -46,14 +38,13 @@
 					      </table>
 					
 					<a href="{% url 'event-update' event.id %}" class="btn" style="background-color: #000034; color: white;">Edit</a>
-				    <a href="{% url 'event-delete' event.id %}" class="btn" style="background-color: #FFA500; color: #000034;">Delete</a>
+				    <a href="{% url 'event-delete' event.id %}" class="btn" style="background-color: #FFA500; color: #000034; margin-bottom: 10px;">Delete</a>
 				
 				{% else %}
 				<form action="{% url 'event-detail' event.id %}" method="POST">
 					{% csrf_token %}
-					{% comment %}{{form.as_p}} {% endcomment %}
 				    <input type="submit" value="Book" class="btn btn-danger" style="width: 130px;">
-				    <input type="number" min="0" max="{{event.seats}}" name='seatsNum'>
+				    <input type="number" min="1" max="{{event.seats}}" name='seatsNum'>
 				</form>
 
 			  {% endif %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Event, UserBook
+from .models import Event, UserBook, Profile
 
 class UserSignup(forms.ModelForm):
     class Meta:
@@ -30,5 +30,8 @@ class BookForm(forms.ModelForm):
         fields = ['seats']
 
 
-       
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = '__all__'       
     

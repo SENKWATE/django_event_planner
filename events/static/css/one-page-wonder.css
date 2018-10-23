@@ -1,4 +1,11 @@
-
+.myprofile {
+          color: green;
+          background-color: black;
+          background-repeat: no-repeat;
+          background-size: cover;
+          margin-left: 100px;
+          
+        }
 
 body {
   font-family: 'Lato';

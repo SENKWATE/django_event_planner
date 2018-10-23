@@ -9,7 +9,6 @@
         <input type="submit" value="Search">
      </form>
      <br>
-      
       <div class="row">
         {% for i in events %}
           <div class="col-sm-4">
@@ -41,21 +40,28 @@
         </thead>
         <tbody>
           {% for i in userbook %}
+
             <tr style="background-color: #3C276C;">
               {% if request.user == i.user %}
                 <td>{{i.event.title}}</td>
                 <td>{{i.event.date}}</td>
                 <td>{{i.event.time}}</td>
                 <td>{{i.seats}}</td>
-                {% if i.event.date >= date_now %}
-                    {% if i.event.time > time_now%}
-                      <td><a href="" class="btn btn-danger" style="background-color: red; color: white;">Cancel</a></td>
-                    {% endif %}
+                {% if i.event.date > date_now %}
+                      <td><a href="{% url 'book-delete' i.id i.event.id %}" class="btn btn-danger" style="background-color: red; color: white;">Cancel</a></td>
+                {% elif i.event.date == date_now %}
+                  {% if i.allowed == True %}
+                    <td><a href="{% url 'book-delete' i.id i.event.id %}" class="btn btn-danger" style="background-color: red; color: white;">Cancel</a></td>
+                  {% else %}
+                    <td></td>
+                  {% endif %}
                 {% else %}
                    <td></td>
                 {% endif %}
               {% endif %}
             </tr>
+
+
           {% endfor %}
         </tbody>
       </table>

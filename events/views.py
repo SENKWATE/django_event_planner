@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
-from .forms import UserSignup, UserLogin, EventForm, BookForm
+from .forms import UserSignup, UserLogin, EventForm, BookForm, ProfileForm
 from django.contrib import messages
-from .models import Event, UserBook
+from .models import Event, UserBook, Profile
 from django.db.models import Q
 import datetime
 from datetime import date
@@ -40,7 +40,23 @@ def my_list(request):
     events = Event.objects.filter(owner=request.user)
     userbook = UserBook.objects.all()
     time_now = datetime.datetime.now().time()
+    hour = -1*time_now.hour
     date_now = date.today()
+    ok = False
+    
+    
+    ################################################
+    # for i in userbook:
+    #     if request.user == i.user:
+    #         x = i.event.time.hour - time_now.hour
+    #         if x >= 3:
+    #             ok.append(True)
+    #         else:
+    #             ok.append(False)
+    # for i in ok:
+    #     print(i)
+
+    #################################################
 
     query = request.GET.get("q")
     if query:
@@ -54,68 +70,49 @@ def my_list(request):
         "userbook": userbook,
         "time_now": time_now,
         "date_now": date_now,
+        "ok": ok,
+        "hour": hour,
     }
     return render(request, 'dashboard.html', context)
+
+def book_delete(request, user_id, event_id):
+    event = Event.objects.get(id=event_id)
+    event.seats += UserBook.objects.get(id=user_id).seats
+    event.save()
+
+    UserBook.objects.get(id=user_id).delete()
+    messages.success(request, "Event booked is successfully canceled!")
+    return redirect('dashboard')
+
+
 
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     userbook = UserBook.objects.filter(event=event)
-    
 
-    # form = BookForm(instance=event)
     if request.method == "POST":
         seat_request2 = request.POST.get('seatsNum')
-        # seat_request = request.POST.get('seats')
         if not seat_request2:
             messages.success(request, "You request empty seats")
             return redirect("event-detail",event_id)
 
         available = event.seats
         remaining = int(available) - int(seat_request2)
-        if remaining == 0:
+        if available == 0:
             messages.success(request, "No available seats")
             return redirect("event-detail",event_id)
         elif remaining < 0:
             messages.success(request, "The seats requested are above maximum capacity. There are only "+str(available)+" seats available.")
             return redirect("event-detail",event_id)
         else:
-            
-            # form = BookForm(request.POST,instance = event)
-            # if form.is_valid:
-                # event = form.save(commit=False)
-            usernames = []
-            # for i in userbook:
-            #     usernames.append(i.user.username) 
-
-            if request.user.username not in usernames:
-                UserBook.objects.create(event=event, user=request.user, seats=seat_request2)
-            # else:
-            #     for j in userbook:
-            #         if j.user.username == request.user.username:
-            #             print(j.user.username,  request.user.username)
-            #             current_user = UserBook.objects.get(id=request.user.id)
-            #             print(current_user.user.username)
-            #             current_user.seats += int(seat_request2)
-            #             current_user.save()
-            #             print(current_user.seats)
-            event.seats = remaining
-            
+            UserBook.objects.create(event=event, user=request.user, seats=seat_request2)
+            event.seats = remaining           
             event.save()
-                # form.save()
             messages.success(request, "Event is booked successfully!")
             return redirect("event-detail",event_id)
-            # else:
-            #     messages.errors(request, "Event is booked successfully!")
-            #     return redirect("event-detail",event_id)
-
-
-                
-                
 
     context = {
         "event": event,
-        # "form": form,
-        
         "userbook": userbook,
     }
     return render(request, 'event_detail.html', context)
@@ -140,6 +137,21 @@ def event_create(request):
     }
     return render(request, 'event_create.html', context)
 
+def profile_info(request):       
+    # profile = Profile.objects.get(id=user_id)
+    # form = ProfileForm(instance=profile)
+
+    # if request.method == "POST":
+    #     form = ProfileForm(request.POST, request.FILES or None, instance=profile)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('home')
+    #     print (form.errors)
+    context = {
+    # "form": form,
+    # "profile": profile,
+     }
+    return render(request, 'profile.html', context)
 
 def event_delete(request, event_id):
     if request.user.is_anonymous:
