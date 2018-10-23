@@ -1,0 +1,76 @@
+{% extends "base.html"%}
+{% block title%}Event Details{% endblock title%}
+{%block content%}
+
+<header class="masthead text-center text-black">
+  <div class="masthead-content">
+
+    <div class="container">
+      <div class="card" style="width: 40rem; left: 190px; border-radius: 25px; border-color: black;">
+		  <div class="card-body">
+		    <h5 class="card-title text-center">Title: {{event.title}}</h5>
+		    <p class="card-text">Description: {{event.description}}</p>
+		  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Date: {{event.date}}</li>
+			    <li class="list-group-item">Time: {{event.time}}</li>
+			    <li class="list-group-item">Location: {{event.location}}</li>
+			    <li class="list-group-item">Seats number available: {{event.seats}}</li>
+			    
+				{% if request.user == event.owner %} 
+					{% comment %}<li class="list-group-item">Users:{% for j in userbook %} {{j.user.username}}, {% endfor %}</li>{% endcomment %}
+					
+					
+					{% comment %} 
+						<ul>
+							<li>{{j.user.username}}: {{j.seats}} &emsp;&emsp;&emsp; {{j.date_time}} </li>
+						</ul>
+					{% endcomment %}
+						<table class="table">
+					        <thead>
+					          <tr style="background-color: grey">
+					            <th scope="col"><strong>User </strong></th>
+					            <th scope="col"><strong>Tickets booked</strong></th>
+					            <th scope="col"><strong>Date/Time</strong></th>
+					          </tr>
+					        </thead>
+					        {% for j in userbook %}
+					        <tbody>				         
+					            <tr>	              
+					                <td>{{j.user.username}}</td>
+					                <td>{{j.seats}}</td>
+					                <td>{{j.date_time}}</td>
+					            </tr>
+					        </tbody>
+					        {% endfor %}
+					      </table>
+					
+					<a href="{% url 'event-update' event.id %}" class="btn" style="background-color: #000034; color: white;">Edit</a>
+				    <a href="{% url 'event-delete' event.id %}" class="btn" style="background-color: #FFA500; color: #000034;">Delete</a>
+				
+				{% else %}
+				<form action="{% url 'event-detail' event.id %}" method="POST">
+					{% csrf_token %}
+					{% comment %}{{form.as_p}} {% endcomment %}
+				    <input type="submit" value="Book" class="btn btn-danger" style="width: 130px;">
+				    <input type="number" min="0" max="{{event.seats}}" name='seatsNum'>
+				</form>
+
+			  {% endif %}
+			 </ul>
+		</div>
+    </div>
+  </div>
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
+
+{% endblock content%}
+
+
+
+
+
+

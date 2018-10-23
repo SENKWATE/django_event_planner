@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="masthead text-center text-white">
+  <div class="masthead-content">
+    <div class="container">
+
+      <form action="{% url 'event-list'%}" method="GET">
+        <input type="text" name='q' placeholder="Search..." style="width: 1000px;">
+        <input type="submit" value="Search">
+     </form>
+      
+      <br>
+      <div class="row">
+        {% for i in ongoing %}
+          <div class="col-sm-4">
+            <div class="card" style="border-radius: 25px; border-color: black;">
+              <div class="card-body text-light bg-dark" style="border-radius: 25px;">
+                <h5 class="card-title">Organizer: {{i.owner}}</h5>
+                <h5 class="card-title">Title: {{i.title}}</h5>
+                <p class="card-text">Data/Time: {{i.date}}/{{i.time}}</p>
+                <a href="{{i.get_absolute_url}}" class="btn" style="background-color: #e3f2fd; color: black;">View</a>
+              </div>
+            </div>
+            <br>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
+
+
+
+{% endblock %}

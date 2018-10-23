@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="masthead text-center text-white">
+  <div class="masthead-content">
+    <div class="container">
+      <form action="{% url 'dashboard'%}" method="GET">
+        <input type="text" name='q' placeholder="Search..." style="width: 1000px;">
+        <input type="submit" value="Search">
+     </form>
+     <br>
+      
+      <div class="row">
+        {% for i in events %}
+          <div class="col-sm-4">
+            <div class="card" style="border-radius: 25px; border-color: black;">
+              <div class="card-body text-light bg-dark"  style="border-radius: 25px;">
+                <h5 class="card-title">Title: {{i.title}}</h5>
+                <p class="card-text">Data/Time: {{i.date}}/{{i.time}}</p>
+                <a href="{{i.get_absolute_url}}" class="btn" style="background-color: #e3f2fd; color: black;">View</a>
+              </div>
+            </div>
+            <br>
+          </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <div class="card-header text-center" style="background-color: #504242; color: white; border-radius: 15px; font-size: 25px;">
+           <strong>Event Booked</strong>
+      </div>
+      <table class="table">
+        <thead>
+          <tr style="background-color: grey">
+            <th scope="col"><strong>Title </strong></th>
+            <th scope="col"><strong>Date</strong></th>
+            <th scope="col"><string>Time</strong></th>
+            <th scope="col"><strong>Tickets booked</strong></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in userbook %}
+            <tr style="background-color: #3C276C;">
+              {% if request.user == i.user %}
+                <td>{{i.event.title}}</td>
+                <td>{{i.event.date}}</td>
+                <td>{{i.event.time}}</td>
+                <td>{{i.seats}}</td>
+                {% if i.event.date >= date_now %}
+                    {% if i.event.time > time_now%}
+                      <td><a href="" class="btn btn-danger" style="background-color: red; color: white;">Cancel</a></td>
+                    {% endif %}
+                {% else %}
+                   <td></td>
+                {% endif %}
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
+
+
+
+{% endblock %}
