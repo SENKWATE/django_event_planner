@@ -14,6 +14,8 @@ class Event(models.Model):
     location = models.CharField(max_length=40) 
     seats = models.PositiveIntegerField(default=0)
     img =models.ImageField(null=True, blank=True)
+    img2 =models.ImageField(null=True, blank=True)
+    img3 =models.ImageField(null=True, blank=True)
 
     def __str__(self): 
         return self.title
@@ -36,5 +38,6 @@ class UserBook(models.Model):
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=20)
-    bio = models.TextField()
+    name = models.CharField(max_length=20,null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
+    img =models.ImageField(null=True, blank=True)

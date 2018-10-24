@@ -1,24 +1,26 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-<header class="masthead text-center text-white">
+<header class="masthead text-center text-white he">
   <div class="masthead-content">
     <div class="container">
-      <h1 class="masthead-heading mb-0">All the events,</h1>
-      <h2 class="masthead-subheading mb-0">You could ever want...</h2>
+      <h1 class="masthead-heading mb-0" style="text-shadow: 3px 2px black; font-family: Georgia;">All the events,</h1>
+      <h2 class="masthead-subheading mb-0" style="text-shadow: 3px 2px black; font-family: Georgia;">You could ever want...</h2>
       {% if request.user.is_anonymous %}
-        <a href="{% url 'signup' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Sign up to find events!</a>
-        <br>
-        <a href="{% url 'login' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Or Sign in</a>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-xl rounded-pill mt-5" style="color: blue; text-shadow: 1px 0.5px #009CF6; background-color: #98DAFF; border-color: blue; border-width: 2px;">Sign up to find events!</a>
+        
+        <a href="{% url 'login' %}" class="btn btn-primary btn-xl rounded-pill mt-5" style="color: blue; text-shadow: 1px 0.5px #009CF6;background-color: #98DAFF; border-color: blue; border-width: 2px;">Or Sign in</a>
       {% else %}
-        <a href="{% url 'event-list' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Find events!</a>
+        <a href="{% url 'event-list' %}" class="btn btn-primary btn-xl rounded-pill mt-5" style="color: blue; text-shadow: 1px 0.5px #009CF6; background-color: #98DAFF; border-color: blue; border-width: 2px;">Find events!</a>
       {% endif %}
     </div>
   </div>
+  {% comment %}
   <div class="bg-circle-1 bg-circle"></div>
   <div class="bg-circle-2 bg-circle"></div>
   <div class="bg-circle-3 bg-circle"></div>
   <div class="bg-circle-4 bg-circle"></div>
+  {% endcomment %}
 </header>
 
 

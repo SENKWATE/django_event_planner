@@ -36,7 +36,7 @@
 <header class="masthead text-center text-white">
   <div class="masthead-content">
     <div class="container">
-        <div class="jumbotron">
+        <div class="jumbotron" style="border-radius: 25px;">
           <h2 class="masthead-subheading mb-0" >Create An Event</h2>
           <form action="{% url 'event-create' %}" method="POST" message="INFOS" enctype="multipart/form-data">
                   {% csrf_token %}
@@ -45,7 +45,7 @@
                     Create 
                     <i class='fas fa-plus-square'></i>
                   </button>
-              </form>
+          </form>
       </div>
     </div>
   </div>

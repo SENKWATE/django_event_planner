@@ -33,7 +33,7 @@
 <header class="masthead text-center text-white">
   <div class="masthead-content">
     <div class="container">
-        <div class="jumbotron">
+        <div class="jumbotron" style="border-radius: 25px;">
           <h2 class="masthead-subheading mb-0" >My Profile</h2>
           <form action="{% url 'profile-edit' request.user.id %}" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}

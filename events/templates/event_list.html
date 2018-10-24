@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<header class="masthead text-center text-white">
+<header class="masthead text-center text-white she">
   <div class="masthead-content">
     <div class="container">
 
@@ -16,7 +17,8 @@
           <div class="col-sm-4">
             <div class="card" style="border-radius: 25px; border-color: black;">
               <div class="card-body text-light bg-dark" style="border-radius: 25px;">
-                <h5 class="card-title">Organizer: {{i.owner}}</h5>
+                {% comment %}<h5 class="card-title">Organizer: {{i.owner}}</h5> {% endcomment %}
+                <h5 class="card-title">Organizer: <a href="{% url 'profile-detail' i.owner.id %}"  style="color: white;">{{i.owner}}</a></h5>
                 <h5 class="card-title">Title: {{i.title}}</h5>
                 <p class="card-text">Data/Time: {{i.date}}/{{i.time}}</p>
                 <a href="{{i.get_absolute_url}}" class="btn" style="background-color: #e3f2fd; color: black;">View</a>
@@ -28,10 +30,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-circle-1 bg-circle"></div>
-  <div class="bg-circle-2 bg-circle"></div>
-  <div class="bg-circle-3 bg-circle"></div>
-  <div class="bg-circle-4 bg-circle"></div>
+ 
   <br><br><br><br><br><br><br><br><br>
 </header>
 

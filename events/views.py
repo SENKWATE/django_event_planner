@@ -8,6 +8,7 @@ from django.db.models import Q
 import datetime
 from datetime import date
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf.urls import url
 
 
 def home(request):
@@ -154,6 +155,7 @@ def profile_info(request):
     return render(request, 'profile.html', context)
 
 def profile_detail(request, profile_id):
+    events = Event.objects.filter(owner=profile_id)
     try:
         profile = Profile.objects.get(id=profile_id)
     except ObjectDoesNotExist:
@@ -161,6 +163,7 @@ def profile_detail(request, profile_id):
 
     context = {
         "profile": profile,
+        "events": events,
     }
     return render(request, 'profile_view.html', context)
 

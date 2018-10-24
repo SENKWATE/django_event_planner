@@ -1,0 +1,18 @@
+header.he{
+	background: url("../../../media/sky.jpg") no-repeat center center fixed;
+	background-size: cover; 
+	background-repeat: no-repeat;
+	
+}
+
+header.she {
+	background: url("../../../media/stage7.png") no-repeat center center fixed;
+	background-size: cover; 
+	background-repeat: no-repeat;
+}
+
+header.they {
+	background: url("../../../media/stage.jpg") no-repeat center center fixed;
+	background-size: cover; 
+	background-repeat: no-repeat;
+}
