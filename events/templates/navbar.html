@@ -14,9 +14,7 @@
           <a class="nav-link" href="{% url 'login' %}">Log In</a>
         </li>
         {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'dashboard' %}">DashBoard</a>
         </li>
@@ -24,11 +22,34 @@
           <a class="nav-link" href="{% url 'event-create' %}">Create An Event</a>
         </li>
         <li class="nav-item">
+        <a href="{% url 'event-list' %}" class="nav-link">Find events</a>
+        </li>
+        {% comment %}
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#">{{ request.user }}</a>
         </li>
+        {% endcomment %}
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ request.user }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'profile-detail' request.user.id %}">My Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a>
+          <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+        </div>
+      </li>
+
         {% endif %}
       </ul>
     </div>

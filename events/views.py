@@ -89,11 +89,12 @@ def book_delete(request, user_id, event_id):
 def event_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     userbook = UserBook.objects.filter(event=event)
+    date_now = date.today()
 
     if request.method == "POST":
         seat_request2 = request.POST.get('seatsNum')
         if not seat_request2:
-            messages.success(request, "You request empty seats")
+            messages.success(request, "You request empty seats, please try again.")
             return redirect("event-detail",event_id)
 
         available = event.seats
@@ -114,6 +115,7 @@ def event_detail(request, event_id):
     context = {
         "event": event,
         "userbook": userbook,
+        "date_now": date_now,
     }
     return render(request, 'event_detail.html', context)
 
@@ -133,25 +135,54 @@ def event_create(request):
         print (form.errors)
     context = {
     "form": form,
-    "username": "hamza",
     }
     return render(request, 'event_create.html', context)
 
-def profile_info(request):       
-    # profile = Profile.objects.get(id=user_id)
-    # form = ProfileForm(instance=profile)
-
-    # if request.method == "POST":
-    #     form = ProfileForm(request.POST, request.FILES or None, instance=profile)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('home')
-    #     print (form.errors)
+def profile_info(request):  
+    form = ProfileForm() 
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES or None)   
+        if form.is_valid():
+            profile = form.save(commit=False) 
+            profile.user = request.user
+            profile.save()
+            return redirect('home')
     context = {
-    # "form": form,
-    # "profile": profile,
+    "form": form,
      }
     return render(request, 'profile.html', context)
+
+def profile_detail(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+
+    context = {
+        "profile": profile,
+    }
+    return render(request, 'profile_view.html', context)
+
+
+def profile_edit(request, profile_id):
+    try:
+        profile = Profile.objects.get(id=profile_id)
+
+    except IndexError:
+        profile =  Profile.objects.create(user=request.user, name = " ", bio = " ")
+
+    form = ProfileForm(instance=profile)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES or None, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully Edited!")
+            return redirect('home')
+        print (form.errors)
+    context = {
+    "form": form,
+    "profile": profile,
+    }
+    return render(request, 'profile.html', context)
+
+
 
 def event_delete(request, event_id):
     if request.user.is_anonymous:

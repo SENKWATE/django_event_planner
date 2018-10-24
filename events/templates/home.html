@@ -8,6 +8,8 @@
       <h2 class="masthead-subheading mb-0">You could ever want...</h2>
       {% if request.user.is_anonymous %}
         <a href="{% url 'signup' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Sign up to find events!</a>
+        <br>
+        <a href="{% url 'login' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Or Sign in</a>
       {% else %}
         <a href="{% url 'event-list' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Find events!</a>
       {% endif %}

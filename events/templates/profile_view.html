@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header class="masthead text-center text-white">
+  <div class="masthead-content">
+    <div class="container">
+        <div class="jumbotron">
+          <h2 class="masthead-subheading mb-0" >My Profile</h2>
+          <p>name: {{profile.name}}</p>
+          <p>Bio: {{profile.bio}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
+
+{% endblock %}

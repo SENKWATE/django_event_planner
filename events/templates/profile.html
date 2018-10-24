@@ -1,11 +1,26 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<header class=" text-center text-white">
+{% comment %}
+<header class="masthead text-center text-black">
   <div class="masthead-content">
-    <div class="container myprofile">
-      
-     
+    <div class="container">
+    <div class="card my-form">
+        <h5 class="card-header">Edit Profile</h5>
+        <div class="card-body">
+          <p class="card-text">
+              <form action="{% url 'profile-edit' request.user.id %}" method="POST" enctype="multipart/form-data" class="my-form2">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <button type="submit" class="btn" style="background-color: red; color: white; width: 80px;">
+                    Edit 
+                    <i class='fas fa-plus-square'></i>
+                  </button>
+              </form>
+          </p>
+        </div>
+    </div>
 
     </div>
   </div>
@@ -14,7 +29,27 @@
   <div class="bg-circle-3 bg-circle"></div>
   <div class="bg-circle-4 bg-circle"></div>
 </header>
-
-
+{% endcomment %}
+<header class="masthead text-center text-white">
+  <div class="masthead-content">
+    <div class="container">
+        <div class="jumbotron">
+          <h2 class="masthead-subheading mb-0" >My Profile</h2>
+          <form action="{% url 'profile-edit' request.user.id %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <button type="submit" class="btn btn-danger" style="width: 200px; font-size: 25px; margin-top: 10px;">
+                    Edit 
+                    <i class='fas fa-plus-square'></i>
+                  </button>
+          </form>
+      </div>
+    </div>
+  </div>
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
 
 {% endblock %}

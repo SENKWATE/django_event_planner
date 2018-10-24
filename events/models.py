@@ -11,7 +11,7 @@ class Event(models.Model):
     description = models.TextField()
     date = models.DateField(auto_now=False)
     time = models.TimeField(auto_now=False)
-    location = models.TextField()  
+    location = models.CharField(max_length=40) 
     seats = models.PositiveIntegerField(default=0)
 
     def __str__(self): 
