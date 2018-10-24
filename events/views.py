@@ -7,6 +7,7 @@ from .models import Event, UserBook, Profile
 from django.db.models import Q
 import datetime
 from datetime import date
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def home(request):
@@ -153,7 +154,10 @@ def profile_info(request):
     return render(request, 'profile.html', context)
 
 def profile_detail(request, profile_id):
-    profile = Profile.objects.get(id=profile_id)
+    try:
+        profile = Profile.objects.get(id=profile_id)
+    except ObjectDoesNotExist:
+        profile = Profile.objects.create(user=request.user, name = " ", bio = " ")
 
     context = {
         "profile": profile,
@@ -165,8 +169,8 @@ def profile_edit(request, profile_id):
     try:
         profile = Profile.objects.get(id=profile_id)
 
-    except IndexError:
-        profile =  Profile.objects.create(user=request.user, name = " ", bio = " ")
+    except ObjectDoesNotExist:
+        profile = Profile.objects.create(user=request.user, name = "X", bio = "Y")
 
     form = ProfileForm(instance=profile)
     if request.method == "POST":

@@ -1,11 +1,15 @@
 .myprofile {
           color: green;
-          
           background-repeat: no-repeat;
           background-size: cover;
           margin-left: 100px;
-
         }
+
+.bk1 {
+  background: url(../../../media/b1.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 body {
   font-family: 'Lato';

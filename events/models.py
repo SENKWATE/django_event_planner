@@ -13,6 +13,7 @@ class Event(models.Model):
     time = models.TimeField(auto_now=False)
     location = models.CharField(max_length=40) 
     seats = models.PositiveIntegerField(default=0)
+    img =models.ImageField(null=True, blank=True)
 
     def __str__(self): 
         return self.title

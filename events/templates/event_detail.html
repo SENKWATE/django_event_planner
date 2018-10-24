@@ -6,9 +6,12 @@
   <div class="masthead-content">
 
     <div class="container">
-      <div class="card" style="width: 40rem; left: 190px; border-radius: 25px; border-color: black; border-width: 5px;">
+      <div class="card" style="width: 50rem; left: 190px; border-radius: 25px; border-color: black; border-width: 5px;">
 		  <div class="card-body">
-		    <h5 class="card-title text-center">Title: {{event.title}}</h5>
+		    <h5 class="card-title text-center" style="font-size: 30px;">Title: {{event.title}}</h5>
+		    {% if event.img %}
+  				<img class="card-img-top" src="{{event.img.url}}" +width=300 height=400 alt="Card image cap" enctype="multipart/form-data">
+  			{% endif %}
 		    <p class="card-text">Description: <br>{{event.description}}</p>
 		  </div>
 			  <ul class="list-group list-group-flush">
@@ -37,8 +40,9 @@
 					        {% endfor %}
 					      </table>
 					
-					<a href="{% url 'event-update' event.id %}" class="btn" style="background-color: #000034; color: white;">Edit</a>
-				    <a href="{% url 'event-delete' event.id %}" class="btn" style="background-color: #FFA500; color: #000034; margin-bottom: 10px;">Delete</a>
+					<a href="{% url 'event-update' event.id %}" class="btn" style="background-color: #000034; color: white; margin-top: 20px;">Edit</a>
+				    <a href="{% url 'event-delete' event.id %}" class="btn" style="background-color: #FFA500; color: #000034;">Delete</a>
+				    <a href="{% url 'dashboard' %}" class="btn" style="background-color: red; color: white; margin-bottom: 10px;">Back</a>
 				
 				{% else %}
 				{% if event.date >= date_now %}
